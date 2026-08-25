@@ -29,10 +29,19 @@ Table 4「FiO2」（snapshot, time_bin == -8）與 Table 5「FiO2, trend per 4h�
 import numpy as np
 import pandas as pd
 import scipy.stats as st
+import os
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 
 ENHANCED_CSV = (
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-    r"C:\Users\your-username\Desktop\extubation_failure_prediction"
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
+    rf"{EXTUBATION_ROOT}"
     r"\data\outputs\gap4_52to4\extubation_features_enhanced_gap4_52to4.csv"
 )
 

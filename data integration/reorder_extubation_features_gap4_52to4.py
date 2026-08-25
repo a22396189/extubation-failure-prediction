@@ -30,13 +30,22 @@
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import os
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 
 # =============================================================
 # 路徑設定
 # =============================================================
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-input_path  = Path(r"C:\Users\your-username\Desktop\extubation_failure_prediction\data\outputs\gap4_52to4\extubation_features_merged_gap4_52to4.csv")
-output_path = Path(r"C:\Users\your-username\Desktop\extubation_failure_prediction\data\outputs\gap4_52to4\extubation_features_merged_gap4_52to4_reordered.csv")
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
+input_path  = Path(rf"{EXTUBATION_ROOT}\data\outputs\gap4_52to4\extubation_features_merged_gap4_52to4.csv")
+output_path = Path(rf"{EXTUBATION_ROOT}\data\outputs\gap4_52to4\extubation_features_merged_gap4_52to4_reordered.csv")
 
 print(f"🚀 讀取資料: {input_path} ...")
 df = pd.read_csv(input_path)

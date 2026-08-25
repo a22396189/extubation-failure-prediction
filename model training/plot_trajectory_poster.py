@@ -13,10 +13,10 @@ Poster 風格動態風險軌跡圖（不重新訓練，直接載入 best_transfo
   --success_id / --failure_id  指定對比圖的病人
 
 執行範例：
-  C:/Users/your-username/miniconda3/envs/extubation_env/python.exe "C:/Users/your-username/Desktop/extubation_failure_prediction/model training/plot_trajectory_poster.py" \
-    --data_csv  "C:/Users/your-username/Desktop/extubation_failure_prediction/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" \
-    --model_pt  "C:/Users/your-username/Desktop/extubation_failure_prediction/results/transformer/best_transformer.pt" \
-    --output_dir "C:/Users/your-username/Desktop/extubation_failure_prediction/results/trajectory_plots" \
+  python "%EXTUBATION_PROJECT_ROOT%/model training/plot_trajectory_poster.py" ^
+    --data_csv  "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" ^
+    --model_pt  "%EXTUBATION_PROJECT_ROOT%/results/transformer/best_transformer.pt" ^
+    --output_dir "%EXTUBATION_PROJECT_ROOT%/results/trajectory_plots" ^
     --focus_ids 35363177
 """
 
@@ -28,6 +28,14 @@ import torch
 import torch.nn as nn
 import matplotlib
 import matplotlib.ticker
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler

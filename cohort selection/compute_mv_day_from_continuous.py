@@ -6,11 +6,20 @@
 
 import pandas as pd
 from pathlib import Path
+import os
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 
 # === 路徑設定 ===
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-input_path = r"C:\Users\your-username\Desktop\extubation_failure_prediction\data\outputs\ventilation_mv3d_continuous.csv"
-output_path = r"C:\Users\your-username\Desktop\extubation_failure_prediction\data\outputs\mv_day_from_continuous.csv"
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
+input_path = rf"{EXTUBATION_ROOT}\data\outputs\ventilation_mv3d_continuous.csv"
+output_path = rf"{EXTUBATION_ROOT}\data\outputs\mv_day_from_continuous.csv"
 
 print("🚀 讀取 ventilation_mv3d_continuous.csv ...")
 df = pd.read_csv(input_path, parse_dates=["starttime", "endtime"])

@@ -264,23 +264,13 @@ def get_probs(model, ds, device, batch_size=256):
 
 
 # =========================================================================
-# 0. 路徑設定（【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，
-#    於其他環境執行前請依實際檔案存放位置調整；亦可於執行時以對應的
-#    --data_csv / --model_pt / --output_dir 參數覆寫，無需修改程式碼）
-# =========================================================================
-DEFAULT_DATA_CSV = r"C:\Users\your-username\Desktop\extubation_failure_prediction\data\outputs\gap4_52to4\extubation_features_imputed_gap4_52to4.csv"
-DEFAULT_MODEL_PT = r"C:\Users\your-username\Desktop\extubation_failure_prediction\results\transformer_save_val_auroc\best_transformer.pt"
-DEFAULT_OUTPUT_DIR = r"C:\Users\your-username\Desktop\extubation_failure_prediction\results\ig_individual_interpretability"
-
-
-# =========================================================================
 # 1. CLI
 # =========================================================================
 def parse_args():
     p = argparse.ArgumentParser(description="Individual-level Integrated Gradients interpretability.")
-    p.add_argument("--data_csv", type=str, default=DEFAULT_DATA_CSV)
-    p.add_argument("--model_pt", type=str, default=DEFAULT_MODEL_PT)
-    p.add_argument("--output_dir", type=str, default=DEFAULT_OUTPUT_DIR)
+    p.add_argument("--data_csv", type=str, required=True)
+    p.add_argument("--model_pt", type=str, required=True)
+    p.add_argument("--output_dir", type=str, required=True)
     p.add_argument("--seed", type=int, default=42)
 
     p.add_argument("--d_model", type=int, default=64)

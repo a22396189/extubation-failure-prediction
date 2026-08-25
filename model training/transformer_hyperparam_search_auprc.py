@@ -66,6 +66,14 @@ import pandas as pd
 import numpy as np
 import optuna
 from optuna.samplers import TPESampler
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
@@ -73,16 +81,16 @@ optuna.logging.set_verbosity(optuna.logging.WARNING)
 # 路徑設定
 # =====================================================================
 TRANSFORMER_SCRIPT = (
-    r"C:\Users\your-username\Desktop\extubation_failure_prediction"
+    rf"{EXTUBATION_ROOT}"
     r"\model training\transformer_pre_extubation_risk_trajectory.py"
 )
 DATA_CSV = (
-    r"C:\Users\your-username\Desktop\extubation_failure_prediction"
+    rf"{EXTUBATION_ROOT}"
     r"\data\outputs\gap4_52to4\extubation_features_imputed_gap4_52to4.csv"
 )
 # ⚠️  獨立輸出目錄，不覆蓋 transformer_hparam_search 的舊結果
 BASE_OUTPUT_DIR = Path(
-    r"C:\Users\your-username\Desktop\extubation_failure_prediction"
+    rf"{EXTUBATION_ROOT}"
     r"\results\transformer_hparam_search_auprc"
 )
 

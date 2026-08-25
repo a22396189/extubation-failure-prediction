@@ -17,7 +17,7 @@ PHENOTYPE_LABELS（確定 28 天死亡率排序後才設定）。
 
 【執行指令】
   C:/Users/your-username/miniconda3/envs/extubation_env/python.exe
-  "C:/Users/your-username/Desktop/extubation_failure_prediction/clustering/replot_umap_with_labels.py"
+  "%EXTUBATION_PROJECT_ROOT%/clustering/replot_umap_with_labels.py"
 """
 
 import pandas as pd
@@ -25,12 +25,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from pathlib import Path
+import os
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 
 # =====================================================================
 # Paths
 # =====================================================================
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-BASE        = r"C:\Users\your-username\Desktop\extubation_failure_prediction"
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
+BASE        = rf"{EXTUBATION_ROOT}"
 COORDS_CSV  = rf"{BASE}\results\phenotyping\umap_coords_last_embOnly.csv"
 OUTPUT_DIR  = rf"{BASE}\results\phenotyping"
 Path(OUTPUT_DIR).mkdir(parents=True, exist_ok=True)

@@ -6,11 +6,27 @@
 import duckdb
 import pandas as pd
 from pathlib import Path
+import os
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+MIMIC_DATA_DIR = os.environ.get("MIMIC_DATA_DIR")
+if not MIMIC_DATA_DIR:
+    raise RuntimeError(
+        "Environment variable MIMIC_DATA_DIR is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local MIMIC-IV raw-data / DuckDB project root."
+    )
 
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-con = duckdb.connect(r"C:\Users\your-username\Desktop\extubation_project\mimic.duckdb")
 
-output_dir = Path(r"C:\Users\your-username\Desktop\extubation_failure_prediction\data\outputs")
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
+con = duckdb.connect(rf"{MIMIC_DATA_DIR}\mimic.duckdb")
+
+output_dir = Path(rf"{EXTUBATION_ROOT}\data\outputs")
 output_dir.mkdir(parents=True, exist_ok=True)
 output_path = output_dir / "ventilation_mv3d_continuous.csv"
 

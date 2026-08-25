@@ -15,10 +15,19 @@
 """
 
 import pandas as pd
+import os
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 
 OUTCOME_CSV = (
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-    r"C:\Users\your-username\Desktop\extubation_failure_prediction"
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
+    rf"{EXTUBATION_ROOT}"
     r"\data\outputs\extubation_outcome.csv"
 )
 
@@ -66,9 +75,9 @@ for threshold in [3, 6, 12, 24, 48]:
     )
 
 # 輸出明細，供後續步驟（列出需剔除的 stay_id）直接使用
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
 out_path = (
-    r"C:\Users\your-username\Desktop\extubation_failure_prediction"
+    rf"{EXTUBATION_ROOT}"
     r"\stats\hours_to_death_distribution.csv"
 )
 died[["subject_id", "stay_id", "extubation_time", "deathtime", "hours_to_death"]].to_csv(

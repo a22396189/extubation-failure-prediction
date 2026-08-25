@@ -51,6 +51,14 @@ Outputs (in OUTPUT_DIR):
 """
 
 import os
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 
 # Fix: Windows threadpoolctl / MKL DLL compatibility (OSError 0xc06d007f)
 # Must be set before importing sklearn / xgboost.
@@ -95,8 +103,8 @@ import seaborn as sns
 # =========================
 # Paths / constants
 # =========================
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-BASE          = r"C:\Users\your-username\Desktop\extubation_failure_prediction"
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
+BASE          = rf"{EXTUBATION_ROOT}"
 DATA_CSV      = rf"{BASE}\data\outputs\gap4_52to4\extubation_features_imputed_gap4_52to4.csv"
 MODEL_PATH    = rf"{BASE}\results\transformer\best_transformer.pt"
 CLUSTER_CSV   = rf"{BASE}\results\phenotyping\cluster_assignments.csv"
@@ -424,6 +432,6 @@ if __name__ == "__main__":
     # =========================================================================
     # Run (same conda env / model checkpoint as the primary phenotyping pipeline):
     #
-    # C:/Users/your-username/miniconda3/envs/extubation_env/python.exe "C:/Users/your-username/Desktop/extubation_failure_prediction/clustering/sensitivity_leave_first_bin_out.py"
+    # C:/Users/your-username/miniconda3/envs/extubation_env/python.exe "%EXTUBATION_PROJECT_ROOT%/clustering/sensitivity_leave_first_bin_out.py"
     # =========================================================================
     main()

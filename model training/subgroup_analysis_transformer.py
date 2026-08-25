@@ -38,11 +38,11 @@ plot_phenotype_risk_trajectories.py 相同模式：
   - forest_plot_auroc.png/pdf  各子群 AUROC 森林圖
 
 執行範例：
-  python "subgroup_analysis_transformer.py" \
-    --data_csv "C:/Users/your-username/Desktop/extubation_failure_prediction/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" \
-    --model_pt "C:/Users/your-username/Desktop/extubation_failure_prediction/results/transformer_0622/best_transformer.pt" \
-    --dx_csv   "C:/Users/your-username/Desktop/extubation_failure_prediction/data/outputs/extubation_features_final_categories.csv" \
-    --output_dir "C:/Users/your-username/Desktop/extubation_failure_prediction/results/subgroup_analysis"
+  python "subgroup_analysis_transformer.py" ^
+    --data_csv "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" ^
+    --model_pt "%EXTUBATION_PROJECT_ROOT%/results/transformer_0622/best_transformer.pt" ^
+    --dx_csv   "%EXTUBATION_PROJECT_ROOT%/data/outputs/extubation_features_final_categories.csv" ^
+    --output_dir "%EXTUBATION_PROJECT_ROOT%/results/subgroup_analysis"
 """
 
 import os
@@ -50,6 +50,14 @@ import sys
 import argparse
 import numpy as np
 import pandas as pd
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 
 # 強制標準輸出使用 UTF-8，避免 Windows cp950 主控台無法顯示 ✓ 等符號而報錯
 if hasattr(sys.stdout, "reconfigure"):

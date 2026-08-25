@@ -78,6 +78,14 @@ from sklearn.calibration import calibration_curve
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 warnings.filterwarnings("ignore")
 
 # =========================
@@ -969,9 +977,9 @@ if __name__ == "__main__":
     ─── 執行範例 ────────────────────────────────────────────────────────────────
 
     # [基本設定]（保留原設計 + OPSUM 新增預設值）
-    python "C:/Users/your-username/Desktop/extubation_failure_prediction/model training/transformer_pre_extubation_risk_trajectory.py" \
-    --data_csv "C:/Users/your-username/Desktop/extubation_failure_prediction/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" \
-    --output_dir "C:/Users/your-username/Desktop/extubation_failure_prediction/results/transformer_0622" \
+    python "%EXTUBATION_PROJECT_ROOT%/model training/transformer_pre_extubation_risk_trajectory.py" \
+    --data_csv "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" \
+    --output_dir "%EXTUBATION_PROJECT_ROOT%/results/transformer_0622" \
     --d_model 64 \
     --nhead 4 \
     --num_layers 3 \
@@ -1001,9 +1009,9 @@ if __name__ == "__main__":
       --threshold_mode youden
 
     # [Prefix cumulative training + causal mask]（動態風險軌跡學習）
-    python "C:/Users/your-username/Desktop/extubation_failure_prediction/model training/transformer_pre_extubation_risk_trajectory.py" \
-      --data_csv "C:/Users/your-username/Desktop/extubation_failure_prediction/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" \
-      --output_dir "C:/Users/your-username/Desktop/extubation_failure_prediction/results/transformer_0528" \
+    python "%EXTUBATION_PROJECT_ROOT%/model training/transformer_pre_extubation_risk_trajectory.py" \
+      --data_csv "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" \
+      --output_dir "%EXTUBATION_PROJECT_ROOT%/results/transformer_0528" \
       --d_model 128 \
       --nhead 4 \
       --num_layers 2 \

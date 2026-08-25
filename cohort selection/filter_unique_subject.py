@@ -1,13 +1,22 @@
 import pandas as pd
+import os
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 # =============================================================
 # filter_unique_subject.py 將 stay_id 對應到 subject_id，若同一病人多次住院，保留 endtime 最早的那一筆
 # 設定路徑
 # =============================================================
 # 請依你的環境確認路徑
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-mv_file_path = r"C:\Users\your-username\Desktop\extubation_failure_prediction\data\outputs\mv_day_from_continuous.csv" # subject_id 最長的一段連續 invasive MV episode
-map_file_path = r"C:\Users\your-username\Desktop\extubation_failure_prediction\data\outputs\stay_subject_map.csv" 
-output_path = r"C:\Users\your-username\Desktop\extubation_failure_prediction\data\outputs\mv_day_unique_subject.csv"
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
+mv_file_path = rf"{EXTUBATION_ROOT}\data\outputs\mv_day_from_continuous.csv" # subject_id 最長的一段連續 invasive MV episode
+map_file_path = rf"{EXTUBATION_ROOT}\data\outputs\stay_subject_map.csv" 
+output_path = rf"{EXTUBATION_ROOT}\data\outputs\mv_day_unique_subject.csv"
 
 # =============================================================
 # 1️⃣ 讀取資料

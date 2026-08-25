@@ -7,7 +7,7 @@ plot_km_poster.py
 不需要重新連接 DuckDB，直接讀取結果。
 
 執行：
-python "C:/Users/your-username/Desktop/extubation_failure_prediction/clustering/plot_km_poster.py"
+python "%EXTUBATION_PROJECT_ROOT%/clustering/plot_km_poster.py"
 """
 
 import pandas as pd
@@ -18,12 +18,21 @@ import matplotlib.ticker as mticker
 from pathlib import Path
 from lifelines import KaplanMeierFitter
 from lifelines.statistics import multivariate_logrank_test
+import os
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 
 # =========================
 # Paths
 # =========================
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-BASE           = r"C:\Users\your-username\Desktop\extubation_failure_prediction"
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
+BASE           = rf"{EXTUBATION_ROOT}"
 OUTCOMES_CSV   = rf"{BASE}\results\phenotyping\cluster_outcomes_28d.csv"
 FIG_DIR        = rf"{BASE}\results\phenotyping\figures"
 Path(FIG_DIR).mkdir(parents=True, exist_ok=True)

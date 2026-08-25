@@ -93,11 +93,6 @@ PROFILE_FEATURES = {
 ALL_PROFILE_COLS = [c for grp in PROFILE_FEATURES.values() for c in grp]
 
 
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際
-# 檔案存放位置調整；亦可於執行時以 --output_dir 參數覆寫，無需修改程式碼
-DEFAULT_OUTPUT_DIR = "C:/Users/your-username/Desktop/extubation_failure_prediction/results/phenotyping"
-
-
 # =========================
 # 1. 參數解析
 # =========================
@@ -105,7 +100,7 @@ def parse_args():
     p = argparse.ArgumentParser(description="Extubation Failure Phenotyping — test set only")
     p.add_argument("--data_csv",    type=str, required=True)
     p.add_argument("--model_path",  type=str, required=True)
-    p.add_argument("--output_dir",  type=str, default=DEFAULT_OUTPUT_DIR)
+    p.add_argument("--output_dir",  type=str, required=True)
     # Model architecture（需與訓練時一致）
     p.add_argument("--d_model",     type=int,   default=64)
     p.add_argument("--nhead",       type=int,   default=4)

@@ -62,16 +62,30 @@ Installation:
 install.packages(c("dplyr", "readr", "tidyr", "purrr", "gtsummary", "gt", "ggplot2"))
 ```
 
-> Some scripts contain absolute file paths from the machine on which they were originally written
-> (e.g., `C:\Users\your-username\Desktop\...`). These paths are all consolidated into a single
-> path-configuration block at the top of each file, marked with a `【路徑注意】` ("Path Notice")
-> comment. To reproduce this pipeline on another machine, simply search for `路徑注意` to find
-> every location that needs adjustment — there is no need to search the entire codebase.
-> For the small number of scripts that read paths via `argparse` (most programs in
-> `model training/` and `clustering/` that accept `--data_csv`, `--output_dir`, etc.), the default
-> path values are likewise consolidated into `DEFAULT_*` constants with the same marker, and can
-> also be overridden directly via the corresponding command-line arguments at runtime without
-> editing the source code.
+### Path Configuration
+
+No machine-specific absolute paths are hardcoded in the source code. Paths are resolved in two
+layers, following standard practice for portable research/ML repos:
+
+1. **Machine-level shared paths** (this project's own root, and the root of your local MIMIC-IV /
+   DuckDB data project) are read from **environment variables**:
+
+   | Variable | Points to |
+   |------|------|
+   | `EXTUBATION_PROJECT_ROOT` | The root of this project (contains `data/`, `results/`, etc.) |
+   | `MIMIC_DATA_DIR` | The root of your local MIMIC-IV raw-data / DuckDB project |
+
+   Copy [`.env.example`](.env.example) to `.env` and fill in your local paths, or set these
+   directly as real environment variables (System Environment Variables on Windows, or
+   `export VAR=value` / `$env:VAR="value"` in your shell). `.env` itself is gitignored and must
+   never be committed. Every script that needs one of these variables checks for it at startup
+   and raises a clear error (pointing back to `.env.example`) if it is not set — there is no
+   silent fallback to a personal path.
+
+2. **Per-run parameters** (input file, output folder) for the `model training/` and `clustering/`
+   scripts are **required command-line arguments** (`--data_csv`, `--output_dir`, etc., via
+   `argparse`) with no default pointing at any personal path. Run any of these scripts with `-h`
+   to see its full argument list.
 
 ---
 
@@ -89,6 +103,7 @@ PhysioNet; therefore, this folder does not include any raw or derived patient da
 extubation_failure_prediction_source_code/
 ├── README.md                          # This documentation file
 ├── requirements.txt                   # Python package version requirements
+├── .env.example                       # Template for the required environment variables
 ├── to duckdb/                         # Raw MIMIC-IV data import and derived table construction (DuckDB)
 ├── cohort selection/                  # Study cohort selection
 ├── outcome labeling/                  # Outcome (extubation failure) labeling
@@ -226,10 +241,11 @@ extubation_failure_prediction_source_code/
 8. stats/, stats_analysis/          Sensitivity analysis and descriptive statistics
 ```
 
-The input/output file paths for each step are specified as absolute paths at the top of each
-script; adjust them to your environment before running. For methodological details on the
-observation-window design, imputation strategy, model architecture, etc., please refer to the
-main text of the thesis and the docstrings/block comments in each script.
+Input/output paths for each step are resolved via the `EXTUBATION_PROJECT_ROOT` / `MIMIC_DATA_DIR`
+environment variables (see [Path Configuration](#path-configuration) above) and, for
+`model training/` and `clustering/` scripts, required command-line arguments. For methodological
+details on the observation-window design, imputation strategy, model architecture, etc., please
+refer to the main text of the thesis and the docstrings/block comments in each script.
 
 ---
 

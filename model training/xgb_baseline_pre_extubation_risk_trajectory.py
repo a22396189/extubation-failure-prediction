@@ -15,9 +15,9 @@ Metrics: AUROC, AUPRC, Accuracy, Sensitivity, Specificity, Precision, F1_score, 
          (keys aligned with Transformer output for direct comparison)
 
 Run example:
-    python "C:/Users/your-username/Desktop/extubation_failure_prediction/model training/xgb_baseline_pre_extubation_risk_trajectory.py"
-    --data_csv "C:/Users/your-username/Desktop/extubation_failure_prediction/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
-    --output_dir "C:/Users/your-username/Desktop/extubation_failure_prediction/results/xgb"
+    python "%EXTUBATION_PROJECT_ROOT%/model training/xgb_baseline_pre_extubation_risk_trajectory.py"
+    --data_csv "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
+    --output_dir "%EXTUBATION_PROJECT_ROOT%/results/xgb"
     --threshold_mode youden
     --n_estimators 500
     --max_depth 5
@@ -45,6 +45,14 @@ from sklearn.calibration import calibration_curve
 
 import xgboost as xgb
 import shap
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 
 warnings.filterwarnings("ignore")
 
@@ -896,9 +904,9 @@ def main(args: argparse.Namespace):
 
 if __name__ == "__main__":
     # Example:
-    #   python "C:/Users/your-username/Desktop/extubation_failure_prediction/model training/xgb_baseline_pre_extubation_risk_trajectory.py"
-    #   --data_csv "C:/Users/your-username/Desktop/extubation_failure_prediction/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
-    #   --output_dir "C:/Users/your-username/Desktop/extubation_failure_prediction/results/xgb"
+    #   python "%EXTUBATION_PROJECT_ROOT%/model training/xgb_baseline_pre_extubation_risk_trajectory.py"
+    #   --data_csv "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
+    #   --output_dir "%EXTUBATION_PROJECT_ROOT%/results/xgb"
     #   --threshold_mode youden --n_estimators 500 --max_depth 5 --learning_rate 0.05
     #   --save_predictions 1 --run_shap 0
 

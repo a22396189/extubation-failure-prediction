@@ -20,9 +20,17 @@ library(ggplot2)
 #   Figure   臨床軌跡圖（12 個時間步的中位數 ± IQR）
 # ============================================================
 
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-DATA_PATH <- "C:/Users/your-username/Desktop/extubation_failure_prediction/data/outputs/gap4_52to4/extubation_features_enhanced_gap4_52to4.csv"
-RESULTS_DIR <- "C:/Users/your-username/Desktop/extubation_failure_prediction/results"
+# 路徑設定：讀取環境變數 EXTUBATION_PROJECT_ROOT（見 repo 根目錄的 .env.example）
+EXTUBATION_ROOT <- Sys.getenv("EXTUBATION_PROJECT_ROOT")
+if (EXTUBATION_ROOT == "") {
+  stop(
+    "Environment variable EXTUBATION_PROJECT_ROOT is not set. ",
+    "Copy .env.example to .env (or set it directly) and point it to your ",
+    "local extubation_failure_prediction project root."
+  )
+}
+DATA_PATH <- file.path(EXTUBATION_ROOT, "data/outputs/gap4_52to4/extubation_features_enhanced_gap4_52to4.csv")
+RESULTS_DIR <- file.path(EXTUBATION_ROOT, "results")
 
 raw_df <- read_csv(DATA_PATH)
 

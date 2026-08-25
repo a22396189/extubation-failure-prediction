@@ -14,7 +14,7 @@ compute_model_comparison_stats.py
     table_a5_model_comparison.txt    純文字版（方便複製）
 
 【執行】
-  python "C:/Users/your-username/Desktop/extubation_failure_prediction/model training/compute_model_comparison_stats.py"
+  python "%EXTUBATION_PROJECT_ROOT%/model training/compute_model_comparison_stats.py"
 """
 
 import os
@@ -24,12 +24,20 @@ import pandas as pd
 from itertools import combinations
 from scipy import stats
 from sklearn.metrics import roc_auc_score, average_precision_score
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+
 
 # =====================================================================
 # Paths
 # =====================================================================
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-BASE        = r"C:\Users\your-username\Desktop\extubation_failure_prediction\results"
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
+BASE        = rf"{EXTUBATION_ROOT}\results"
 OUTPUT_DIR  = os.path.join(BASE, "comparison")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

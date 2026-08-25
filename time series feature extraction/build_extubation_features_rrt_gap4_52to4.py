@@ -54,14 +54,30 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 from tqdm import tqdm
+import os
+EXTUBATION_ROOT = os.environ.get("EXTUBATION_PROJECT_ROOT")
+if not EXTUBATION_ROOT:
+    raise RuntimeError(
+        "Environment variable EXTUBATION_PROJECT_ROOT is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local extubation_failure_prediction project root."
+    )
+MIMIC_DATA_DIR = os.environ.get("MIMIC_DATA_DIR")
+if not MIMIC_DATA_DIR:
+    raise RuntimeError(
+        "Environment variable MIMIC_DATA_DIR is not set. "
+        "Copy .env.example to .env (or set it directly) and point it to your "
+        "local MIMIC-IV raw-data / DuckDB project root."
+    )
+
 
 # === 路徑設定 ===
-# 【路徑注意】以下為程式撰寫時所在機器上的檔案路徑，於其他環境執行前請依實際檔案存放位置調整
-duckdb_path = r"C:\Users\your-username\Desktop\extubation_project\mimic.duckdb"
-rrt_path = r"C:\Users\your-username\Desktop\extubation_project\data\mimic-iv-3.1\derived\rrt.parquet"
-extub_path = r"C:\Users\your-username\Desktop\extubation_failure_prediction\data\outputs\extubation_outcome.csv"
+# 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
+duckdb_path = rf"{MIMIC_DATA_DIR}\mimic.duckdb"
+rrt_path = rf"{MIMIC_DATA_DIR}\data\mimic-iv-3.1\derived\rrt.parquet"
+extub_path = rf"{EXTUBATION_ROOT}\data\outputs\extubation_outcome.csv"
 
-output_dir = Path(r"C:\Users\your-username\Desktop\extubation_failure_prediction\data\outputs\gap4_52to4")
+output_dir = Path(rf"{EXTUBATION_ROOT}\data\outputs\gap4_52to4")
 output_dir.mkdir(parents=True, exist_ok=True)
 output_path = output_dir / "extubation_features_rrt_gap4_52to4.csv"
 

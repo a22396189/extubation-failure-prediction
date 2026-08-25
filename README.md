@@ -1,7 +1,7 @@
 # Computer Program (Source Code) Documentation
 
-This folder contains the source code appendix for the thesis *"A Transformer-Based Dynamic Risk
-Trajectory Model for Predicting Extubation Failure and Phenotyping"*. It includes all original
+This folder contains the source code appendix for the thesis *"Transformer-Based Dynamic Risk
+Trajectories for Extubation Failure Prediction and Phenotyping"*. It includes all original
 source code used in the study, organized by processing stage, along with this documentation
 (README).
 

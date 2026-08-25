@@ -6,8 +6,8 @@ plot_km_poster.py
 從已儲存的 cluster_outcomes_28d.csv 產生 poster 用高品質 KM 存活曲線。
 不需要重新連接 DuckDB，直接讀取結果。
 
-執行：
-python "%EXTUBATION_PROJECT_ROOT%/clustering/plot_km_poster.py"
+執行（<EXTUBATION_PROJECT_ROOT> 為佔位符，請先設定好環境變數，見 .env.example）：
+python "<EXTUBATION_PROJECT_ROOT>/clustering/plot_km_poster.py"
 """
 
 import pandas as pd

@@ -975,59 +975,62 @@ def main(args):
 if __name__ == "__main__":
     """
     ─── 執行範例 ────────────────────────────────────────────────────────────────
+    以下範例僅供參考語法與參數用途；<EXTUBATION_PROJECT_ROOT> 為佔位符，執行前請先
+    設定好 EXTUBATION_PROJECT_ROOT 環境變數（見 repo 根目錄 .env.example），並依你
+    實際使用的 shell（cmd / PowerShell / bash）自行加上對應的續行符號。
 
     # [基本設定]（保留原設計 + OPSUM 新增預設值）
-    python "%EXTUBATION_PROJECT_ROOT%/model training/transformer_pre_extubation_risk_trajectory.py" \
-    --data_csv "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" \
-    --output_dir "%EXTUBATION_PROJECT_ROOT%/results/transformer_0622" \
-    --d_model 64 \
-    --nhead 4 \
-    --num_layers 3 \
-    --dim_ff 128 \
-    --dropout 0.2 \
-    --lr 5e-5 \
-    --pe_factor 1.0 \
-    --lr_warmup_steps 5 \
-    --lr_decay 0.99 \
-    --pooling last \
-    --use_time_weights 0 \
-    --use_causal_mask 0 \
-    --threshold_mode youden \
-    --focus_stay_id 30015288
+    python "<EXTUBATION_PROJECT_ROOT>/model training/transformer_pre_extubation_risk_trajectory.py"
+        --data_csv "<EXTUBATION_PROJECT_ROOT>/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
+        --output_dir "<EXTUBATION_PROJECT_ROOT>/results/transformer"
+        --d_model 64
+        --nhead 4
+        --num_layers 3
+        --dim_ff 128
+        --dropout 0.2
+        --lr 5e-5
+        --pe_factor 1.0
+        --lr_warmup_steps 5
+        --lr_decay 0.99
+        --pooling last
+        --use_time_weights 0
+        --use_causal_mask 0
+        --threshold_mode youden
+        --focus_stay_id 30015288
 
     # [OPSUM 風格較大模型]（供 ablation 比較）
-    python "C:/Users/your-username/Desktop/extubation_project_revised/model training/transformer_pre_extubation_risk_trajectory.py" \
-      --data_csv "C:/Users/your-username/Desktop/extubation_project_revised/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" \
-      --output_dir "C:/Users/your-username/Desktop/extubation_project_revised/results/transformer_large" \
-      --d_model 128 --nhead 8 --num_layers 4 --dim_ff 256 \
-      --dropout 0.2 --lr 1e-4 \
-      --pe_factor 0.01 \
-      --train_noise 0.02 \
-      --lr_warmup_steps 5 --lr_decay 0.99 \
-      --pooling mean \
-      --use_time_weights 1 --use_causal_mask 0 \
-      --threshold_mode youden
+    python "<EXTUBATION_PROJECT_ROOT>/model training/transformer_pre_extubation_risk_trajectory.py"
+        --data_csv "<EXTUBATION_PROJECT_ROOT>/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
+        --output_dir "<EXTUBATION_PROJECT_ROOT>/results/transformer_large"
+        --d_model 128 --nhead 8 --num_layers 4 --dim_ff 256
+        --dropout 0.2 --lr 1e-4
+        --pe_factor 0.01
+        --train_noise 0.02
+        --lr_warmup_steps 5 --lr_decay 0.99
+        --pooling mean
+        --use_time_weights 1 --use_causal_mask 0
+        --threshold_mode youden
 
     # [Prefix cumulative training + causal mask]（動態風險軌跡學習）
-    python "%EXTUBATION_PROJECT_ROOT%/model training/transformer_pre_extubation_risk_trajectory.py" \
-      --data_csv "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" \
-      --output_dir "%EXTUBATION_PROJECT_ROOT%/results/transformer_0528" \
-      --d_model 128 \
-      --nhead 4 \
-      --num_layers 2 \
-      --dim_ff 256 \
-      --dropout 0.323593564991412 \
-      --weight_decay 0.00198653514661317 \
-      --train_noise 0.0905167446200122 \
-      --lr 0.000375455940828661 \
-      --pe_factor 0.99210135508788 \
-      --lr_warmup_steps 4 \
-      --lr_decay 0.977256272747636 \
-      --pooling last \
-      --use_time_weights 1 \
-      --use_causal_mask 1 \
-      --threshold_mode youden \
-      --focus_stay_id 30015288
+    python "<EXTUBATION_PROJECT_ROOT>/model training/transformer_pre_extubation_risk_trajectory.py"
+        --data_csv "<EXTUBATION_PROJECT_ROOT>/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
+        --output_dir "<EXTUBATION_PROJECT_ROOT>/results/transformer_prefix_cumulative"
+        --d_model 128
+        --nhead 4
+        --num_layers 2
+        --dim_ff 256
+        --dropout 0.323593564991412
+        --weight_decay 0.00198653514661317
+        --train_noise 0.0905167446200122
+        --lr 0.000375455940828661
+        --pe_factor 0.99210135508788
+        --lr_warmup_steps 4
+        --lr_decay 0.977256272747636
+        --pooling last
+        --use_time_weights 1
+        --use_causal_mask 1
+        --threshold_mode youden
+        --focus_stay_id 30015288
 
     ─────────────────────────────────────────────────────────────────────────────
     """

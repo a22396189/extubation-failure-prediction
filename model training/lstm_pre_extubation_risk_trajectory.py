@@ -4,14 +4,15 @@
 lstm_pre_extubation_risk_trajectory.py
 LSTM model for pre-extubation failure risk prediction using sequential ICU data.
 
-Example run:
-    python "C:/Users/your-username/Desktop/extubation_project_code_review/model training/lstm_pre_extubation_risk_trajectory.py" \
-        --data_csv "C:/Users/your-username/Desktop/extubation_project_code_review/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" \
-        --output_dir "C:/Users/your-username/Desktop/extubation_project_code_review/results/lstm" \
-        --hidden_dim 64 --num_layers 2 --dropout 0.2 \
-        --lr 5e-5 --epochs 80 --patience 15 \
-        --lr_warmup_steps 5 --lr_decay 0.99 \
-        --threshold_mode youden \
+Example run (<EXTUBATION_PROJECT_ROOT> is a placeholder; set the environment
+variable first, see .env.example):
+    python "<EXTUBATION_PROJECT_ROOT>/model training/lstm_pre_extubation_risk_trajectory.py"
+        --data_csv "<EXTUBATION_PROJECT_ROOT>/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
+        --output_dir "<EXTUBATION_PROJECT_ROOT>/results/lstm"
+        --hidden_dim 64 --num_layers 2 --dropout 0.2
+        --lr 5e-5 --epochs 80 --patience 15
+        --lr_warmup_steps 5 --lr_decay 0.99
+        --threshold_mode youden
         --focus_stay_id 30015288
 """
 

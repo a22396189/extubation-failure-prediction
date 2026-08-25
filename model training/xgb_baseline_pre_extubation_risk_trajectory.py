@@ -14,10 +14,11 @@ Split: stay_id-level stratified, seed=42, 70/15/15
 Metrics: AUROC, AUPRC, Accuracy, Sensitivity, Specificity, Precision, F1_score, Brier_score
          (keys aligned with Transformer output for direct comparison)
 
-Run example:
-    python "%EXTUBATION_PROJECT_ROOT%/model training/xgb_baseline_pre_extubation_risk_trajectory.py"
-    --data_csv "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
-    --output_dir "%EXTUBATION_PROJECT_ROOT%/results/xgb"
+Run example (<EXTUBATION_PROJECT_ROOT> is a placeholder; set the environment
+variable first, see .env.example):
+    python "<EXTUBATION_PROJECT_ROOT>/model training/xgb_baseline_pre_extubation_risk_trajectory.py"
+    --data_csv "<EXTUBATION_PROJECT_ROOT>/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
+    --output_dir "<EXTUBATION_PROJECT_ROOT>/results/xgb"
     --threshold_mode youden
     --n_estimators 500
     --max_depth 5
@@ -904,9 +905,9 @@ def main(args: argparse.Namespace):
 
 if __name__ == "__main__":
     # Example:
-    #   python "%EXTUBATION_PROJECT_ROOT%/model training/xgb_baseline_pre_extubation_risk_trajectory.py"
-    #   --data_csv "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
-    #   --output_dir "%EXTUBATION_PROJECT_ROOT%/results/xgb"
+    #   python "<EXTUBATION_PROJECT_ROOT>/model training/xgb_baseline_pre_extubation_risk_trajectory.py"
+    #   --data_csv "<EXTUBATION_PROJECT_ROOT>/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
+    #   --output_dir "<EXTUBATION_PROJECT_ROOT>/results/xgb"
     #   --threshold_mode youden --n_estimators 500 --max_depth 5 --learning_rate 0.05
     #   --save_predictions 1 --run_shap 0
 

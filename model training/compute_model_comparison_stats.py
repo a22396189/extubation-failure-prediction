@@ -13,8 +13,8 @@ compute_model_comparison_stats.py
     table_a5_model_comparison.csv    完整統計表（論文 Table A5）
     table_a5_model_comparison.txt    純文字版（方便複製）
 
-【執行】
-  python "%EXTUBATION_PROJECT_ROOT%/model training/compute_model_comparison_stats.py"
+【執行】（<EXTUBATION_PROJECT_ROOT> 為佔位符，請先設定好環境變數，見 .env.example）
+  python "<EXTUBATION_PROJECT_ROOT>/model training/compute_model_comparison_stats.py"
 """
 
 import os

@@ -677,9 +677,9 @@ if __name__ == "__main__":
     # 模型路徑：
     #   results/transformer/best_transformer.pt
     #
-    # 執行指令（單行）：
+    # 執行指令（<EXTUBATION_PROJECT_ROOT> 為佔位符，請先設定好環境變數，見 .env.example）：
     #
-    # C:/Users/your-username/miniconda3/envs/extubation_env/python.exe "C:/Users/your-username/Desktop/extubation_failure_prediction/clustering/extubation_failure_phenotyping.py" --data_csv "C:/Users/your-username/Desktop/extubation_failure_prediction/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" --model_path "C:/Users/your-username/Desktop/extubation_failure_prediction/results/transformer/best_transformer.pt" --output_dir "C:/Users/your-username/Desktop/extubation_failure_prediction/results/phenotyping" --n_clusters 4 --d_model 64 --nhead 4 --num_layers 3 --dim_ff 128 --dropout 0.2 --pe_factor 1.0
+    # python "<EXTUBATION_PROJECT_ROOT>/clustering/extubation_failure_phenotyping.py" --data_csv "<EXTUBATION_PROJECT_ROOT>/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" --model_path "<EXTUBATION_PROJECT_ROOT>/results/transformer/best_transformer.pt" --output_dir "<EXTUBATION_PROJECT_ROOT>/results/phenotyping" --n_clusters 4 --d_model 64 --nhead 4 --num_layers 3 --dim_ff 128 --dropout 0.2 --pe_factor 1.0
     #
     # =========================================================================
     main()

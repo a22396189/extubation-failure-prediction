@@ -430,8 +430,10 @@ def main():
 
 if __name__ == "__main__":
     # =========================================================================
-    # Run (same conda env / model checkpoint as the primary phenotyping pipeline):
+    # Run (same model checkpoint as the primary phenotyping pipeline;
+    # <EXTUBATION_PROJECT_ROOT> is a placeholder, set the environment variable
+    # first, see .env.example):
     #
-    # C:/Users/your-username/miniconda3/envs/extubation_env/python.exe "%EXTUBATION_PROJECT_ROOT%/clustering/sensitivity_leave_first_bin_out.py"
+    # python "<EXTUBATION_PROJECT_ROOT>/clustering/sensitivity_leave_first_bin_out.py"
     # =========================================================================
     main()

@@ -28,7 +28,7 @@ plot_phenotype_risk_trajectories.py 相同模式：
 
 【模型架構參數】
   需與訓練該 checkpoint 時使用的參數一致，預設值取自
-  results/transformer_0622 的訓練指令
+  transformer_pre_extubation_risk_trajectory.py 的基本訓練設定
   （d_model=64, nhead=4, num_layers=3, dim_ff=128, dropout=0.2, pe_factor=1.0, pooling=last）。
   若你用其他超參數訓練了模型，請在執行時覆寫對應參數。
 
@@ -37,12 +37,12 @@ plot_phenotype_risk_trajectories.py 相同模式：
   - subgroup_metrics.csv       每個子群的完整效能指標（含 bootstrap 95% CI）
   - forest_plot_auroc.png/pdf  各子群 AUROC 森林圖
 
-執行範例：
-  python "subgroup_analysis_transformer.py" ^
-    --data_csv "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" ^
-    --model_pt "%EXTUBATION_PROJECT_ROOT%/results/transformer_0622/best_transformer.pt" ^
-    --dx_csv   "%EXTUBATION_PROJECT_ROOT%/data/outputs/extubation_features_final_categories.csv" ^
-    --output_dir "%EXTUBATION_PROJECT_ROOT%/results/subgroup_analysis"
+執行範例（<EXTUBATION_PROJECT_ROOT> 為佔位符，請先設定好環境變數，見 .env.example）：
+  python "subgroup_analysis_transformer.py"
+    --data_csv "<EXTUBATION_PROJECT_ROOT>/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
+    --model_pt "<EXTUBATION_PROJECT_ROOT>/results/transformer/best_transformer.pt"
+    --dx_csv   "<EXTUBATION_PROJECT_ROOT>/data/outputs/extubation_features_final_categories.csv"
+    --output_dir "<EXTUBATION_PROJECT_ROOT>/results/subgroup_analysis"
 """
 
 import os
@@ -554,7 +554,7 @@ def parse_args():
     p.add_argument("--output_dir", type=str, default="results/subgroup_analysis")
     p.add_argument("--seed", type=int, default=42, help="需與訓練時的 --seed 一致，才能重建相同 split。")
 
-    # 模型架構（需與訓練該 checkpoint 時一致；預設值取自 results/transformer_0622）
+    # 模型架構（需與訓練該 checkpoint 時一致；預設值取自基本訓練設定）
     p.add_argument("--d_model", type=int, default=64)
     p.add_argument("--nhead", type=int, default=4)
     p.add_argument("--num_layers", type=int, default=3)

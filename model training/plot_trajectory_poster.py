@@ -12,11 +12,11 @@ Poster 風格動態風險軌跡圖（不重新訓練，直接載入 best_transfo
   --compare 1           畫成功 vs EF 對比圖
   --success_id / --failure_id  指定對比圖的病人
 
-執行範例：
-  python "%EXTUBATION_PROJECT_ROOT%/model training/plot_trajectory_poster.py" ^
-    --data_csv  "%EXTUBATION_PROJECT_ROOT%/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" ^
-    --model_pt  "%EXTUBATION_PROJECT_ROOT%/results/transformer/best_transformer.pt" ^
-    --output_dir "%EXTUBATION_PROJECT_ROOT%/results/trajectory_plots" ^
+執行範例（<EXTUBATION_PROJECT_ROOT> 為佔位符，請先設定好環境變數，見 .env.example）：
+  python "<EXTUBATION_PROJECT_ROOT>/model training/plot_trajectory_poster.py"
+    --data_csv  "<EXTUBATION_PROJECT_ROOT>/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
+    --model_pt  "<EXTUBATION_PROJECT_ROOT>/results/transformer/best_transformer.pt"
+    --output_dir "<EXTUBATION_PROJECT_ROOT>/results/trajectory_plots"
     --focus_ids 35363177
 """
 

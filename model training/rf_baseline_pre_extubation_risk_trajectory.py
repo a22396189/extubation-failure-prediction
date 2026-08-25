@@ -537,13 +537,14 @@ def parse_args():
 
 if __name__ == "__main__":
     """
-    Run example:
+    Run example (<EXTUBATION_PROJECT_ROOT> is a placeholder; set the environment
+    variable first, see .env.example):
 
-    python "C:/Users/your-username/Desktop/extubation_project_code_review/model training/rf_baseline_pre_extubation_risk_trajectory.py" \
-      --data_csv "C:/Users/your-username/Desktop/extubation_project_code_review/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv" \
-      --output_dir "C:/Users/your-username/Desktop/extubation_project_code_review/results/rf" \
-      --threshold_mode youden \
-      --n_estimators 500 --max_depth 10 \
+    python "<EXTUBATION_PROJECT_ROOT>/model training/rf_baseline_pre_extubation_risk_trajectory.py"
+      --data_csv "<EXTUBATION_PROJECT_ROOT>/data/outputs/gap4_52to4/extubation_features_imputed_gap4_52to4.csv"
+      --output_dir "<EXTUBATION_PROJECT_ROOT>/results/rf"
+      --threshold_mode youden
+      --n_estimators 500 --max_depth 10
       --run_shap 1
     """
     main(parse_args())

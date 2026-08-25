@@ -15,9 +15,8 @@ PHENOTYPE_LABELS（確定 28 天死亡率排序後才設定）。
   2. 依排序更新下方 PHENOTYPE_LABELS / PHENOTYPE_COLORS / PLOT_ORDER
   3. 執行此腳本
 
-【執行指令】
-  C:/Users/your-username/miniconda3/envs/extubation_env/python.exe
-  "%EXTUBATION_PROJECT_ROOT%/clustering/replot_umap_with_labels.py"
+【執行指令】（<EXTUBATION_PROJECT_ROOT> 為佔位符，請先設定好環境變數，見 .env.example）
+  python "<EXTUBATION_PROJECT_ROOT>/clustering/replot_umap_with_labels.py"
 """
 
 import pandas as pd

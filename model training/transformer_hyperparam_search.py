@@ -77,7 +77,7 @@ if not EXTUBATION_ROOT:
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
 # =====================================================================
-# 路徑設定（請依實際環境調整）
+# 路徑設定（由環境變數 EXTUBATION_PROJECT_ROOT 提供，請參考 repo 根目錄的 .env.example）
 # =====================================================================
 TRANSFORMER_SCRIPT = (
     rf"{EXTUBATION_ROOT}"

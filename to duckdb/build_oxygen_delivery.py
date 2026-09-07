@@ -15,7 +15,8 @@ build_oxygen_delivery.py
       後續腳本 join 使用
 
 【注意】
-    - 路徑為原分析機器上的絕對路徑，於其他環境執行前請先修改
+    - 所有路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，
+      請參考 repo 根目錄的 .env.example 設定
 """
 
 import duckdb
@@ -33,10 +34,10 @@ if not MIMIC_DATA_DIR:
 # 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
 con = duckdb.connect(rf"{MIMIC_DATA_DIR}\mimic.duckdb")
 
-# === 掛載 chartevents parquet 檔作為 view ===
-con.execute("""
+# === 掛載 chartevents parquet 檔作為 view（直接查詢 Parquet，不匯入 DuckDB physical table）===
+con.execute(f"""
 CREATE OR REPLACE VIEW mimiciv_icu_chartevents AS
-SELECT * FROM read_parquet(f'{MIMIC_DATA_DIR}/data/mimic-iv-3.1/icu_parquet/chartevents.parquet');
+SELECT * FROM read_parquet('{MIMIC_DATA_DIR}/data/mimic-iv-3.1/icu_parquet/chartevents.parquet');
 """)
 
 # === MIT-LCP oxygen_delivery SQL（DuckDB 版本） ===

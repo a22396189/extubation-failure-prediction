@@ -116,17 +116,24 @@ extubation_failure_prediction_source_code/
 └── stats_analysis/                    # Descriptive statistics and thesis statistical tables (Python + R)
 ```
 
+> **Data storage layers.** For how data moves from the raw MIMIC-IV CSVs through
+> Parquet, DuckDB, and the feature files to the final model dataset — and the
+> rationale for using DuckDB rather than a database server — see
+> [`docs/data_architecture.md`](docs/data_architecture.md).
+
 ### 1. `to duckdb/` — Data Import and Derived Table Construction
 
 | File | Function |
 |------|------|
-| `import_mimic_core_tables_to_duckdb.py` | Imports core MIMIC-IV tables (admissions, patients, icustays) into DuckDB |
-| `build_vitalsign.py` | Builds the derived vital-sign table from chartevents |
-| `build_ventilator_setting.py` | Builds the derived ventilator-settings table from chartevents |
-| `build_oxygen_delivery.py` | Builds the derived oxygen-delivery-device table from chartevents |
+| `import_mimic_core_tables_to_duckdb.py` | Imports the small core MIMIC-IV dimension tables (admissions, patients, icustays) into DuckDB as physical tables. The large `chartevents` table is **not** imported — the `build_*` scripts query `chartevents.parquet` directly. |
+| `build_vitalsign.py` | Builds the derived vital-sign table from `chartevents.parquet` → `derived/vitalsign.parquet` |
+| `build_ventilator_setting.py` | Builds the derived ventilator-settings table from `chartevents.parquet` → DuckDB table + `derived/ventilator_setting.parquet` |
+| `build_oxygen_delivery.py` | Builds the derived oxygen-delivery-device table from `chartevents.parquet` → DuckDB table |
 | `build_ventilation.py` | Integrates the two tables above to determine respiratory support status at each time point (endotracheal tube, non-invasive, HFNC, etc.) |
 | `build_ventilation_mv3d_continuous.py` | Filters continuous invasive mechanical ventilation events |
 | `build_stay_subject_map.py` | Builds a stay_id ↔ subject_id lookup table |
+
+See [`docs/data_architecture.md`](docs/data_architecture.md) for the full raw / derived / study layering.
 
 ### 2. `cohort selection/` — Cohort Selection
 

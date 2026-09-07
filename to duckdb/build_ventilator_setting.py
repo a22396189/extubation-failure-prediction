@@ -11,8 +11,9 @@ build_ventilator_setting.py
     - chartevents.parquet（透過 mimiciv_icu_chartevents view 讀取）
 
 【輸出】
-    - DuckDB 資料庫中的 ventilator_setting 表，供 build_ventilation.py
-      與時序特徵萃取腳本使用
+    - DuckDB 資料庫中的 ventilator_setting 表，供 build_ventilation.py 使用
+    - data/mimic-iv-3.1/derived/ventilator_setting.parquet，供
+      time series feature extraction/ 的呼吸器特徵腳本讀取
 """
 
 import duckdb
@@ -30,10 +31,10 @@ if not MIMIC_DATA_DIR:
 # 以下路徑由環境變數 EXTUBATION_PROJECT_ROOT / MIMIC_DATA_DIR 提供，請參考 repo 根目錄的 .env.example 設定
 con = duckdb.connect(rf"{MIMIC_DATA_DIR}\mimic.duckdb")
 
-# === 掛載 chartevents parquet 作為 view ===
-con.execute("""
+# === 掛載 chartevents parquet 作為 view（直接查詢 Parquet，不匯入 DuckDB physical table）===
+con.execute(f"""
 CREATE OR REPLACE VIEW mimiciv_icu_chartevents AS
-SELECT * FROM read_parquet(f'{MIMIC_DATA_DIR}/data/mimic-iv-3.1/icu_parquet/chartevents.parquet');
+SELECT * FROM read_parquet('{MIMIC_DATA_DIR}/data/mimic-iv-3.1/icu_parquet/chartevents.parquet');
 """)
 
 # === MIT-LCP ventilator_setting SQL (DuckDB 版本) ===
@@ -103,6 +104,14 @@ GROUP BY
 print("🚀 建立 ventilator_setting 表中 ...")
 con.execute(ventset_sql)
 print("✅ 建立完成！")
+
+# === 另存一份 Parquet 到 derived/，作為時序特徵腳本的輸入（Parquet 為本專案 derived 資料的交換格式）===
+os.makedirs(rf"{MIMIC_DATA_DIR}/data/mimic-iv-3.1/derived", exist_ok=True)
+ventset_parquet = rf"{MIMIC_DATA_DIR}/data/mimic-iv-3.1/derived/ventilator_setting.parquet"
+con.execute(
+    f"COPY ventilator_setting TO '{ventset_parquet}' (FORMAT PARQUET, COMPRESSION 'SNAPPY');"
+)
+print("✅ 已輸出:", ventset_parquet)
 
 # === 快速檢查前 5 筆 ===
 df = con.execute("SELECT * FROM ventilator_setting LIMIT 5").df()
